@@ -9,10 +9,16 @@
   {% if form %}
 
   <form action="/loging_in/" method="POST">
-    {% csrf_token %} 
+    {% csrf_token %}
   Username:  <div class="form-group">{{form.name_input}} </div> </br>
   Password:  <div class="form-group">{{form.password_input}} </div>
+  {% if Error %}
+
+    <div class="alert alert-danger"> {{Error}} </div>
+
+  {% endif%}
   <input type="Submit" class="btn btn-success" value="Login"/>
+
   </form>
 
   {% endif %}

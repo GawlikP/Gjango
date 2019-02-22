@@ -19,13 +19,15 @@
       Username:  <div class="form-group"> {{form.name_input}} </div>
       Password:  <div class="form-group"> {{form.password_input}} </div>
       Confirm password:  <div class="form-group"> {{form.confirm_password}} </div>
+
+      {% if Error %}
+        <div class="alert alert-danger"> {{Error}} </div>
+      {% endif %}
+
       ?  {{form.accept}} </br>
         <input type="Submit" class="btn btn-warning" value="Register"/>
     </form>
 
-    {% if Error %}
-      <div class="alert alert-danger"> {{Erorr}} </div>
-    {% endif %}
 
     {% endif %}
 {% endif %}

@@ -13,7 +13,18 @@ from .models import User
 
 def index(request):
 
+    users = None
+    Loged_in = False
+    if 'username' in  request.COOKIES and 'password' in request.COOKIES:
+        Loged_in = True
+
+    users = User.objects.all()[:10]
+
+
+
     context = {
+        'is_logged':Loged_in,
+        'users':users,
         'title':'Gjango',
         'navi_one':'active'
     }
@@ -31,17 +42,31 @@ def profile(request):
 def registration(request):
 
     form = None
+    Registered = False
+
+    Error = None
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            usrnm = form.cleaned_data['name_input']
-            password = form.cleaned_data['password_input']
+            print('valid')
+            if not User.objects.filter(username=form.cleaned_data['name_input']):
+                usr = form.cleaned_data['name_input']
+                psw = form.cleaned_data['password_input']
+                user = User.objects.create(username=usr,password = make_password(psw))
+                Registered = True
+                print('created')
+            else:
+                Error = "User Already exist !"
+        else:
+            Error = "Not valid form"
     else:
         form = RegisterForm()
 
     context = {
+        'Registered':Registered,
         'form':form,
+        'Error':Error,
         'navi_four':'active',
         'title':'Registration'
     }
@@ -50,30 +75,40 @@ def registration(request):
 
 def login(request):
 
-    form = None
+    #form = None
     Registered = False
     Error = None
+    Loged_in = False
+    usr = ""
+    psw = ""
 
     if request.method == 'POST':
+        print('post')
         form = LoginForm(request.POST)
         if form.is_valid():
-            if not User.objects.filter(username=form.cleaned_data['name_input']):
+            print('valid')
+            if User.objects.filter(username=form.cleaned_data['name_input']):
                 usr = form.cleaned_data['name_input']
                 psw = form.cleaned_data['password_input']
-                user = User.objects.create(username=usr,password = make_password(psw))
-                Registered = True
+                Loged_in = True
             else:
-                Error = "User Already exist !"
+                Error = "User Do not exist !"
         else:
             Error = "Form not valid !"
     else:
+        print('no post')
         form = LoginForm()
 
     context = {
         'form':form,
         'title':'Loging in',
-        'registered':Registered,
         'Error': Error
     }
+    response = render(request,'loging_in.html', context)
 
-    return render(request,'loging_in.html',context)
+    if Loged_in:
+        print('setting cookies')
+        response.set_cookie('username',usr),
+        response.set_cookie('password',psw),
+
+    return response
