@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block left  %}
+
+  So... here you can register to our site m8
+
+{% endblock %}
+
+{% block right %}
+
+{% if Registered %}
+
+  <div class="alert alert-success"> Registered ! </div>
+
+{% else %}
+  {% if form %}
+    <form action="/register/" method="POST">
+      {% csrf_token %}
+      Username:  <div class="form-group"> {{form.name_input}} </div>
+      Password:  <div class="form-group"> {{form.password_input}} </div>
+      Confirm password:  <div class="form-group"> {{form.confirm_password}} </div>
+      ?  {{form.accept}} </br>
+        <input type="Submit" class="btn btn-warning" value="Register"/>
+    </form>
+
+    {% if Error %}
+      <div class="alert alert-danger"> {{Erorr}} </div>
+    {% endif %}
+
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block bottom %}
+
+
+
+{% endblock %}
