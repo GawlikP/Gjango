@@ -6,8 +6,8 @@
 
 {% block right %}
 
-  {% if form %}
-
+  {% if form  %}
+  {% if not Loged_in %}
   <form action="/loging_in/" method="POST">
     {% csrf_token %}
   Username:  <div class="form-group">{{form.name_input}} </div> </br>
@@ -20,7 +20,9 @@
   <input type="Submit" class="btn btn-success" value="Login"/>
 
   </form>
-
+  {% else %}
+    <div class="alert alert-success"> Success !! </div>
+  {% endif %}
   {% endif %}
 
 {% endblock %}

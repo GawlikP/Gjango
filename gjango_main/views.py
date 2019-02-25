@@ -30,14 +30,6 @@ def index(request):
     }
 
     return render(request,'main.html',context)
-def profile(request):
-
-    context = {
-        'title':'Profile',
-        'navi_two':'active',
-    }
-
-    return render(request,'main.html',context)
 
 def registration(request):
 
@@ -100,6 +92,7 @@ def login(request):
         form = LoginForm()
 
     context = {
+        'Loged_in': Loged_in,
         'form':form,
         'title':'Loging in',
         'Error': Error
@@ -112,3 +105,34 @@ def login(request):
         response.set_cookie('password',psw),
 
     return response
+
+def profile(request):
+
+    user = None
+
+    if 'username' in request.COOKIES and 'password' in request.COOKIES:
+        user = request.COOKIES['username']
+
+    context = {
+        'navi_two':'active',
+        'title': 'Profile'
+
+    }
+
+
+    return render(request, 'profile.html',context)
+
+def logout(request):
+    user = None
+    if 'username' in request.COOKIES and 'password' in request.COOKIES:
+        user = request.COOKIES['username']
+
+    context = {
+        'title': 'Loging_out'
+    }
+
+    response = render(request,'logout.html',context)
+    response.delete_cookie('username')
+    response.delete_cookie('password')
+
+    return response;

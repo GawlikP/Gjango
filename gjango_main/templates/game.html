@@ -2,14 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="/static/css/main.css">
-
-
     <title>Gjango</title>
   </head>
   <body>
+
     <div class="container">
       <div class="row  w-100">
       <ul class="nav nav-pills">
@@ -41,27 +37,9 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-sm-6 h-100">
-          {% block left %}
-
-          {% endblock %}
-        </div>
-        <div class="col-sm-6 h-100">
-          {% block right %}
-
-          {% endblock %}
-        </div>
-    </div>
-  <hr>
-    <div class="row">
-
-      <div class="alert alert-dark w-100" role="alert">
-        {% block bottom %}
-        {% endblock %}
+          <canvas> </canvas>
       </div>
 
 
-    </div>
-    </div>
   </body>
 </html>
