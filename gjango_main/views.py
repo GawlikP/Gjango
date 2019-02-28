@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 from .forms import LoginForm
 from .forms import RegisterForm
+from .forms import CreatePlayerForm
 
 from .models import User
 
@@ -92,7 +93,7 @@ def login(request):
         form = LoginForm()
 
     context = {
-        'Loged_in': Loged_in,
+        'is_logged': Loged_in,
         'form':form,
         'title':'Loging in',
         'Error': Error
@@ -109,11 +110,23 @@ def login(request):
 def profile(request):
 
     user = None
+    loged_in = False
+    form = None
 
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username']
+        loged_in = True
+
+
+    if request.method == 'POST':
+        form = CreatePlayerForm(request.POST);
+    else:
+        form = CreatePlayerForm()
 
     context = {
+        'form': form,
+        'username': user,
+        'is_logged': loged_in,
         'navi_two':'active',
         'title': 'Profile'
 
@@ -132,7 +145,29 @@ def logout(request):
     }
 
     response = render(request,'logout.html',context)
-    response.delete_cookie('username')
-    response.delete_cookie('password')
+    try :
+        response.delete_cookie('username')
+        response.delete_cookie('password')
+    except:
+        print('error')
+    return response
+
+def game(request):
+
+    user = None
+    loged_in = False
+    if 'username' in request.COOKIES and 'password' in request.COOKIES:
+        user = request.COOKIES['username']
+        loged_in = True
+
+
+
+    context = {
+        'navi_three': 'active',
+        'is_logged': loged_in,
+        'title': 'Game'
+    }
+
+    response = render(request,'game.html',context);
 
     return response;

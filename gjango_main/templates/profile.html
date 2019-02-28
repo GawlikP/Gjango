@@ -2,8 +2,16 @@
 
 {% block right %}
 
+  {% if form %}
 
-Test
+  <form method="POST">
+    <h3> Create yout Character </h3>
+    {{form.name_input}} </br>
+    {{form.Type_choice}}
+      <input type="submit" value="Accept">Create</<input>
+  </form>
+
+  {% endif %}
 
 <hr>
 
@@ -11,7 +19,7 @@ Test
 
 {% block left %}
 
-
+  <div class="alert alert-info" > Username: {{username}} </div>
 <hr>
 
 {% endblock %}
