@@ -11,7 +11,7 @@ class User(models.Model):
         verbose_name_plural = 'User'
 
 class Player(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     hp = models.FloatField(default=0.0)
     max_hp = models.FloatField(default=0.0)
     mp = models.FloatField(default=0.0)

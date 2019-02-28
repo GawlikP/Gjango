@@ -4,11 +4,18 @@
 
   {% if form %}
 
-  <form method="POST">
+  <form action='/profile/' method="POST">
+    {% csrf_token %}
+    <div class="form-group">
     <h3> Create yout Character </h3>
-    {{form.name_input}} </br>
-    {{form.Type_choice}}
-      <input type="submit" value="Accept">Create</<input>
+        {{form.name_input}} </br>
+        </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput2">Choose your class</label>
+      {{form.Type_choice}} </br>
+    </div>
+      <input class="btn btn-success" type="submit" value="Create"/>
+      </div>
   </form>
 
   {% endif %}
@@ -20,6 +27,9 @@
 {% block left %}
 
   <div class="alert alert-info" > Username: {{username}} </div>
+  {% if Characters %}
+
+  {% endif %}
 <hr>
 
 {% endblock %}

@@ -11,6 +11,7 @@ from .forms import RegisterForm
 from .forms import CreatePlayerForm
 
 from .models import User
+from .models import Player
 
 def index(request):
 
@@ -76,14 +77,17 @@ def login(request):
     psw = ""
 
     if request.method == 'POST':
-        print('post')
         form = LoginForm(request.POST)
         if form.is_valid():
-            print('valid')
             if User.objects.filter(username=form.cleaned_data['name_input']):
-                usr = form.cleaned_data['name_input']
-                psw = form.cleaned_data['password_input']
-                Loged_in = True
+                user = User.objects.get(username=form.cleaned_data['name_input'])
+                print('user: ' + str(user.password))
+                if check_password(form.cleaned_data['password_input'],user.password):
+                    usr = form.cleaned_data['name_input']
+                    psw = form.cleaned_data['password_input']
+                    Loged_in = True
+                else:
+                    Error = "Password unconfirmed !"
             else:
                 Error = "User Do not exist !"
         else:
@@ -93,6 +97,7 @@ def login(request):
         form = LoginForm()
 
     context = {
+        'Loged_in': Loged_in,
         'is_logged': Loged_in,
         'form':form,
         'title':'Loging in',
@@ -112,18 +117,38 @@ def profile(request):
     user = None
     loged_in = False
     form = None
+    Characters = None;
 
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username']
         loged_in = True
 
+    if user != None:
+        Characters = Player.objects.all(user );
 
     if request.method == 'POST':
+        print('Profile post')
         form = CreatePlayerForm(request.POST);
+        if form.is_valid():
+            print('Profile valid')
+            try:
+                user = User.objects.get(username=user);
+            except:
+                user = None;
+            if user != None:
+                name = form.cleaned_data['name_input'];
+                clss = form.cleaned_data['Type_choice'];
+                error = create_character(clss,name,user);
+
+                if error:
+                    print(error);
+            else:
+                print('Error')
     else:
         form = CreatePlayerForm()
 
     context = {
+        'Characters': Characters,
         'form': form,
         'username': user,
         'is_logged': loged_in,
@@ -153,7 +178,6 @@ def logout(request):
     return response
 
 def game(request):
-
     user = None
     loged_in = False
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
@@ -171,3 +195,49 @@ def game(request):
     response = render(request,'game.html',context);
 
     return response;
+
+
+
+# FUNCTIONS !!!!!
+def create_character(clss,name,user):
+    if clss == '1':
+        try:
+            test = Player.objects.create(name= name, user= user,
+            vit= 2.0, str= 3.0, agility= 1.0, dex= 2.0, inte= 1.0,
+            wis= 2.0, pow= 2.0);
+            print(test + " udalo sie !")
+            return "Success"
+        except:
+            return "Error"
+        try:
+            test = Player.objects.create(name= name, user=user,
+            vit= 4.0, str=3.0, agility= 0.0, dex= 1.0, inte= 1.0,
+            wis= 1.0, pow= 3.0);
+            print(test + " udalo sie !");
+        except:
+            return "Error"
+    elif clss == '3':
+        try:
+            test = Player.objects.create(name= name, user= user,
+            vit= 1.0, str = 1.0, agility= 1.0, dex= 0.0, inte= 5.0,
+            wis= 2.0, pow= 2.0
+            );
+            print(test +" udalo sie !");
+        except:
+            return "Error"
+    elif clss == '4':
+        try:
+            test = Player.objects.create(name= name, user= user,
+            vit = 1.0, str= 2.0, agility= 4.0, dex= 2.0, inte= 2.0,
+            wis=1.0, pow=2.0);
+            print(test + " udalo sie !")
+        except:
+            return "Error"
+    elif clss == '5':
+        try:
+            test = Player.objects.create(name= name, user= user,
+            vit=2.0, str=2.0, agility= 2.0, dex=5.0, inte= 1.0,
+            wis= 1.0, pow=4.0);
+            print(test + " udalo sie !!!");
+        except:
+            return "Error"
