@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block left %}
+
+
+  {% if  character %}
+    <h2>Name : {{character.name}} </h2> </br>
+  <h3>  class :{{character.clss}}  </br>
+    Hp:{{character.max_hp}} / {{character.hp}} </br>
+    Mp:{{character.mp}} / {{character.max_mp}} </br>
+    Speed:{{character.speed}} </br>
+    Dmg:{{character.dmg}} </br> </h3>
+  {% endif %}
+
+{% endblock %}
+
+{% block right %}
+
+{% endblock %}
+
+{% block bottom %}
+
+{% endblock %}

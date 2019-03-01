@@ -13,6 +13,8 @@ from .forms import CreatePlayerForm
 from .models import User
 from .models import Player
 
+from gjango_main.char_cre import *
+
 def index(request):
 
     users = None
@@ -124,7 +126,17 @@ def profile(request):
         loged_in = True
 
     if user != None:
-        Characters = Player.objects.all(user );
+        try:
+            print('Trying to find user')
+            ussr = User.objects.get(username= user);
+        except:
+            print('User not found')
+            ussr = None;
+
+        if ussr != None:
+            print('Getting Characters')
+            Characters = Player.objects.all().filter(user=ussr);
+
 
     if request.method == 'POST':
         print('Profile post')
@@ -138,8 +150,11 @@ def profile(request):
             if user != None:
                 name = form.cleaned_data['name_input'];
                 clss = form.cleaned_data['Type_choice'];
-                error = create_character(clss,name,user);
-
+                error = None
+                if Player.objects.filter(name= name).count() == 0:
+                    error = create_character(clss,name,user);
+                else:
+                    print('already exits')
                 if error:
                     print(error);
             else:
@@ -196,24 +211,54 @@ def game(request):
 
     return response;
 
+def character(response,id):
+    try:
+        character = Player.objects.get(id= id);
+    except:
+        return HttpResponse('Error 404 XD');
+
+    loged_in = False
+
+    if 'username' in response.COOKIES and 'password' in response.COOKIES:
+        user = response.COOKIES['username'];
+        loged_in = True
+
+
+    context = {
+    'title': 'Character',
+    'is_logged': loged_in,
+    'character': character
+    }
+
+    return render(response, 'character.html', context);
 
 
 # FUNCTIONS !!!!!
+
 def create_character(clss,name,user):
     if clss == '1':
-        try:
-            test = Player.objects.create(name= name, user= user,
-            vit= 2.0, str= 3.0, agility= 1.0, dex= 2.0, inte= 1.0,
-            wis= 2.0, pow= 2.0);
-            print(test + " udalo sie !")
-            return "Success"
-        except:
-            return "Error"
+        c = set_random_perks(Warrior);
+        stats = get_stats_from_perks(c)
+
+        #try:
+        test = Player.objects.create(name= name, user= user, clss='Warrrior',
+        vit= c[0], str= c[1], agility= c[2],dex= c[3], inte= c[4], wis=c[5],
+        pow= c[6], defen= c[7],hp= stats[0],
+        max_hp= stats[0], mp= stats[1], max_mp= stats[1],speed= stats[2],
+        dmg= stats[3], armor= stats[4], crit_chance= stats[5], armmor_pen= stats[6],
+        regeneration= stats[7], mana_regeneration= stats[8], s_pow= stats[9],
+        magic_pen= stats[10], magic_a= stats[11], dodge= stats[12]);
+        #print(test + " udalo sie !")
+        return "Success"
+        #except:
+        #    return "Error"
+    elif clss == '2':
         try:
             test = Player.objects.create(name= name, user=user,
             vit= 4.0, str=3.0, agility= 0.0, dex= 1.0, inte= 1.0,
             wis= 1.0, pow= 3.0);
             print(test + " udalo sie !");
+            return "Success"
         except:
             return "Error"
     elif clss == '3':
@@ -223,6 +268,7 @@ def create_character(clss,name,user):
             wis= 2.0, pow= 2.0
             );
             print(test +" udalo sie !");
+            return "Success"
         except:
             return "Error"
     elif clss == '4':
@@ -231,6 +277,7 @@ def create_character(clss,name,user):
             vit = 1.0, str= 2.0, agility= 4.0, dex= 2.0, inte= 2.0,
             wis=1.0, pow=2.0);
             print(test + " udalo sie !")
+            return "Success"
         except:
             return "Error"
     elif clss == '5':
@@ -239,5 +286,6 @@ def create_character(clss,name,user):
             vit=2.0, str=2.0, agility= 2.0, dex=5.0, inte= 1.0,
             wis= 1.0, pow=4.0);
             print(test + " udalo sie !!!");
+            return "Success"
         except:
             return "Error"

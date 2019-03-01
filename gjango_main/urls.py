@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^register/',views.registration,name='registration'),
     url(r'^log_out/',views.logout,name='logout'),
     url(r'^game/', views.game,name="game"),
+    url(r'^character/(?P<id>\d+)/$',views.character, name='character')
+    #r'^(?P<id>\d+)/$'
 ]

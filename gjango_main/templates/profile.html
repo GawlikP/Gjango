@@ -28,7 +28,9 @@
 
   <div class="alert alert-info" > Username: {{username}} </div>
   {% if Characters %}
-
+    {% for character in Characters %}
+      <a href="/character/{{character.id}}/">  {{character.name}} </a> </br>
+    {% endfor %}
   {% endif %}
 <hr>
 
