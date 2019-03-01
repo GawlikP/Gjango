@@ -253,39 +253,58 @@ def create_character(clss,name,user):
         #except:
         #    return "Error"
     elif clss == '2':
-        try:
-            test = Player.objects.create(name= name, user=user,
-            vit= 4.0, str=3.0, agility= 0.0, dex= 1.0, inte= 1.0,
-            wis= 1.0, pow= 3.0);
-            print(test + " udalo sie !");
-            return "Success"
-        except:
-            return "Error"
+        c = set_random_perks(Barbarian);
+        stats = get_stats_from_perks(c)
+
+        #try:
+        test = Player.objects.create(name= name, user= user, clss='Barbarian',
+        vit= c[0], str= c[1], agility= c[2],dex= c[3], inte= c[4], wis=c[5],
+        pow= c[6], defen= c[7],hp= stats[0],
+        max_hp= stats[0], mp= stats[1], max_mp= stats[1],speed= stats[2],
+        dmg= stats[3], armor= stats[4], crit_chance= stats[5], armmor_pen= stats[6],
+        regeneration= stats[7], mana_regeneration= stats[8], s_pow= stats[9],
+        magic_pen= stats[10], magic_a= stats[11], dodge= stats[12]);
+        #print(test + " udalo sie !")
+        return "Success"
     elif clss == '3':
-        try:
-            test = Player.objects.create(name= name, user= user,
-            vit= 1.0, str = 1.0, agility= 1.0, dex= 0.0, inte= 5.0,
-            wis= 2.0, pow= 2.0
-            );
-            print(test +" udalo sie !");
-            return "Success"
-        except:
-            return "Error"
+        c = set_random_perks(Mage);
+        stats = get_stats_from_perks(c)
+
+        #try:
+        test = Player.objects.create(name= name, user= user, clss='Mage',
+        vit= c[0], str= c[1], agility= c[2],dex= c[3], inte= c[4], wis=c[5],
+        pow= c[6], defen= c[7],hp= stats[0],
+        max_hp= stats[0], mp= stats[1], max_mp= stats[1],speed= stats[2],
+        dmg= stats[3], armor= stats[4], crit_chance= stats[5], armmor_pen= stats[6],
+        regeneration= stats[7], mana_regeneration= stats[8], s_pow= stats[9],
+        magic_pen= stats[10], magic_a= stats[11], dodge= stats[12]);
+        #print(test + " udalo sie !")
+        return "Success"
     elif clss == '4':
-        try:
-            test = Player.objects.create(name= name, user= user,
-            vit = 1.0, str= 2.0, agility= 4.0, dex= 2.0, inte= 2.0,
-            wis=1.0, pow=2.0);
-            print(test + " udalo sie !")
-            return "Success"
-        except:
-            return "Error"
+        c = set_random_perks(Thief);
+        stats = get_stats_from_perks(c)
+
+        #try:
+        test = Player.objects.create(name= name, user= user, clss='Thief',
+        vit= c[0], str= c[1], agility= c[2],dex= c[3], inte= c[4], wis=c[5],
+        pow= c[6], defen= c[7],hp= stats[0],
+        max_hp= stats[0], mp= stats[1], max_mp= stats[1],speed= stats[2],
+        dmg= stats[3], armor= stats[4], crit_chance= stats[5], armmor_pen= stats[6],
+        regeneration= stats[7], mana_regeneration= stats[8], s_pow= stats[9],
+        magic_pen= stats[10], magic_a= stats[11], dodge= stats[12]);
+        #print(test + " udalo sie !")
+        return "Success"
     elif clss == '5':
-        try:
-            test = Player.objects.create(name= name, user= user,
-            vit=2.0, str=2.0, agility= 2.0, dex=5.0, inte= 1.0,
-            wis= 1.0, pow=4.0);
-            print(test + " udalo sie !!!");
-            return "Success"
-        except:
-            return "Error"
+        c = set_random_perks(Monk);
+        stats = get_stats_from_perks(c)
+
+        #try:
+        test = Player.objects.create(name= name, user= user, clss='Monk',
+        vit= c[0], str= c[1], agility= c[2],dex= c[3], inte= c[4], wis=c[5],
+        pow= c[6], defen= c[7],hp= stats[0],
+        max_hp= stats[0], mp= stats[1], max_mp= stats[1],speed= stats[2],
+        dmg= stats[3], armor= stats[4], crit_chance= stats[5], armmor_pen= stats[6],
+        regeneration= stats[7], mana_regeneration= stats[8], s_pow= stats[9],
+        magic_pen= stats[10], magic_a= stats[11], dodge= stats[12]);
+        #print(test + " udalo sie !")
+        return "Success"

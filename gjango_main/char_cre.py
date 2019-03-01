@@ -77,6 +77,9 @@ def get_stats_from_perks(clss):
 def set_random_perks(clss):
     #random.randint(1,101)
     points = 4.0
+    choose = 0;
+
+
     if points > 0.1: rnd = random.randint(1,int(points*100))/100
     else: rnd = 0.0;
     print(rnd);
