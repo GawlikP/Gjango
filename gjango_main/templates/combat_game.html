@@ -16,6 +16,15 @@
     }
 </style>
 
+  <script type="text/javascript">
+      var player = {
+        this.name = "{{player.name}}";
+        this.clss = "{{player.clss}}";
+        this.str = {{player}};
+
+      };
+  </script>
+
 
     <title>Gjango</title>
   </head>
@@ -53,32 +62,7 @@
       </div>
       <div class="row ">
         <div class="wrapper">
-
-          {% if is_logged %}
-            {% if characters %}
-                  <form action="/combat_game/" method="POST">
-                    {% csrf_token %}
-                      <div class ="form-group">
-
-                        <select class="form-control" name="characterSelect">
-                          {% for character in characters %}
-                            <option> {{character.name}} </option>
-                          {% endfor %}
-                        </select>
-                        <input type="submit" class="btn btn-success" value="Ok"/>
-                      </div>
-                  </form>
-            {% else %}
-              <h1> You do not have any of characters </h1>
-            {% endif %}
-
-          {% else %}
-
-            <h1> U need to be loged to play game </h1>
-
-          {% endif %}
-
-
+          <textarea id="game_textarea" cols="8"></textarea>
       </div>
       </div>
 
@@ -90,6 +74,10 @@
             {% endblock %}
           </div>
         </div>
+
+        <script type="text/javascript"  src="/static/js/combat_game.js">
+
+        </script>
 
   </body>
 </html>

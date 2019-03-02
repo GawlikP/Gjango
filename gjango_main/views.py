@@ -195,16 +195,22 @@ def logout(request):
 def game(request):
     user = None
     loged_in = False
+    characters = None
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username']
         loged_in = True
 
+    if loged_in:
+        ussr = User.objects.get(username= user);
+        characters = Player.objects.all().filter(user= ussr);
+
 
 
     context = {
+        'characters': characters,
         'navi_three': 'active',
         'is_logged': loged_in,
-        'title': 'Game'
+        'title': 'Game Lobby'
     }
 
     response = render(request,'game.html',context);
@@ -232,6 +238,11 @@ def character(response,id):
 
     return render(response, 'character.html', context);
 
+def combat_game(response):
+    if response.POST:
+        payment_id = response.POST.get('characterSelect', '')
+
+    return HttpResponse("Name: "+ payment_id+ " Character")
 
 # FUNCTIONS !!!!!
 
