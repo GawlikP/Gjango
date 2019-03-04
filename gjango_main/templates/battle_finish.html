@@ -2,6 +2,12 @@
 
 {% block right %}
 
-  {{result}}
+  {{result}} !! </br>
+
+  {% if exp_before != 0 or exp_now != 0 %}
+
+    Exp before: {{exp_before}} --- Exp now: {{exp_now}}
+
+  {% endif %}
 
 {% endblock %}

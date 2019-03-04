@@ -1,7 +1,9 @@
 {% extends 'index.html' %}
 
 {% block right %}
+ <script type="text/javascript" src="/static/js/delete_character_aproved.js">
 
+ </script>
   {% if is_logged %}
 
   {% if form %}
@@ -37,7 +39,8 @@
   <div class="alert alert-info" > Username: {{username}} </div>
   {% if Characters %}
     {% for character in Characters %}
-      <a href="/character/{{character.id}}/">  {{character.name}} </a> </br>
+      <a href="/character/{{character.id}}/">  {{character.name}} </a>
+      <button onclick="delete_character_aproved(this)" name="{{character.id}}" value="Delete" class="btn btn-warning">Delete</button></br>
     {% endfor %}
   {% endif %}
 <hr>

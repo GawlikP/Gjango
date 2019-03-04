@@ -277,6 +277,8 @@ def combat_game(response):
     if battle != None:
         request.set_cookie('battle_id',battle.id);
         print('battle id setted')
+        request.set_cookie('character_id',character.id);
+        print('character id setted')
 
     return request
 
@@ -284,14 +286,18 @@ def battle_finish(request):
 
     user = None
     battle_id = -1
+    character_id = -1
     result = 'Error'
     logged_in = False
+    exp_before = 0
+    exp_now = 0
 
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username'];
         logged_in = True;
-    if 'battle_id' in request.COOKIES:
+    if 'battle_id' in request.COOKIES and 'character_id' in request.COOKIES:
         battle_id = request.COOKIES['battle_id']
+        character_id = request.COOKIES['character_id']
 
 
     if request.POST:
@@ -303,6 +309,14 @@ def battle_finish(request):
             m.result = True;
             m.save();
             result = 'Victory !!!';
+            print(character_id)
+            if character_id != -1:
+                m = Player.objects.get(id=character_id);
+                print("getting character id")
+                exp_before = m.exp
+                m.exp += 10 +(m.exp*0.5);
+                exp_now = m.exp
+                m.save();
 
         elif battle_result == 'Fail' and battle_id != -1:
             m = Battle.objects.get(id=battle_id)
@@ -314,6 +328,8 @@ def battle_finish(request):
     Battle.objects.filter(~Q(id=battle_id),result= None).delete();
 
     context = {
+        'exp_before': exp_before,
+        'exp_now': exp_now,
         'result': result,
         'logged_in': logged_in,
         'title': 'Combat Result!'
@@ -321,7 +337,28 @@ def battle_finish(request):
 
     response = render(request,'battle_finish.html',context)
     response.delete_cookie('battle_id')
+    response.delete_cookie('character_id')
     return response;
+
+def delete_character(request,id):
+
+    user = None
+    logged_in = False;
+
+    if 'username' in request.COOKIES and 'password' in request.COOKIES:
+        user = request.COOKIES['username'];
+        logged_in = True;
+    if Player.objects.filter(id= id).exists():
+        Player.objects.filter(id= id).delete();
+    else:
+        return HttpResponse("Character doesnt exist")
+
+    context = {
+        'logged_in': logged_in,
+        'title' :'Character Deleted'
+    }
+
+    return render(request, 'delete_character.html', context)
 
 # FUNCTIONS !!!!!
 
