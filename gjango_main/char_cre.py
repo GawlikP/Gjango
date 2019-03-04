@@ -65,7 +65,7 @@ def get_stats_from_perks(clss):
     armor = clss[3] * 1.5  + clss[7]
     crit_chance = clss[2] * 0.5
     armor_pen = clss[2] * 0.5 + clss[3] + clss[6] * 0.1
-    regeneration = clss[0] * 2 + clss[1] * 0.5 + clss[7] * 0.1 + clss[7] * 0.5
+    regeneration = clss[0] * 1 + clss[1] * 0.2 + clss[7] * 0.1 + clss[7] * 0.2
     mana_regeneration = clss[0] + clss[4] * 3 + clss[6] * 0.5
     dodge = clss[2] * 2
     s_pow = clss[3] + clss[4] * 2 + clss[5] * 3 + clss[6] * 5

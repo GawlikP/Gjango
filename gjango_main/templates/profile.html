@@ -2,6 +2,8 @@
 
 {% block right %}
 
+  {% if is_logged %}
+
   {% if form %}
 
   <form action='/profile/' method="POST">
@@ -20,11 +22,17 @@
 
   {% endif %}
 
+  {% endif %}
+
 <hr>
+
+
 
 {% endblock %}
 
 {% block left %}
+
+  {% if is_logged %}
 
   <div class="alert alert-info" > Username: {{username}} </div>
   {% if Characters %}
@@ -33,6 +41,11 @@
     {% endfor %}
   {% endif %}
 <hr>
+  {% else %}
+
+  <h1> Please login  </h1>
+
+  {% endif %}
 
 {% endblock %}
 

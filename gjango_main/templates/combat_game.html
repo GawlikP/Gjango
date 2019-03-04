@@ -17,12 +17,44 @@
 </style>
 
   <script type="text/javascript">
-      var player = {
-        this.name = "{{player.name}}";
-        this.clss = "{{player.clss}}";
-        this.str = {{player}};
-
+      let player = {
+        name: "{{player.name}}",
+        clss: "{{player.clss}}",
+        dmg: {{player.dmg}},
+        hp: {{player.hp}},
+        max_hp: {{player.max_hp}},
+        mp: {{player.mp}},
+        max_mp: {{player.max_mp}},
+        speed: {{player.speed}},
+        armor: {{player.armor}},
+        crit_chance: {{player.crit_chance}},
+        armmor_pen: {{player.armmor_pen}},
+        regeneration: {{player.regeneration}},
+        mana_regeneration: {{player.mana_regeneration}},
+        s_pow: {{player.s_pow}},
+        magic_pen: {{player.magic_pen}},
+        magic_a: {{player.magic_a}},
+        dodge: {{player.dodge}},
       };
+      let enemy = {
+        name: "{{enemy.name}}",
+        clss: "{{enemy.clss}}",
+        dmg: {{enemy.dmg}},
+        hp: {{enemy.hp}},
+        max_hp: {{enemy.max_hp}},
+        mp: {{enemy.mp}},
+        max_mp: {{enemy.max_mp}},
+        speed: {{enemy.speed}},
+        armor: {{enemy.armor}},
+        crit_chance: {{enemy.crit_chance}},
+        armmor_pen: {{enemy.armmor_pen}},
+        regeneration: {{enemy.regeneration}},
+        mana_regeneration: {{enemy.mana_regeneration}},
+        s_pow: {{enemy.s_pow}},
+        magic_pen: {{enemy.magic_pen}},
+        magic_a: {{enemy.magic_a}},
+        dodge: {{enemy.dodge}}
+      }
   </script>
 
 
@@ -62,7 +94,7 @@
       </div>
       <div class="row ">
         <div class="wrapper">
-          <textarea id="game_textarea" cols="8"></textarea>
+          <textarea id="game_textarea" cols="100" rows="8"></textarea>
       </div>
       </div>
 

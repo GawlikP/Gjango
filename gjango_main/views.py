@@ -4,6 +4,7 @@ from django.http import HttpResponse
 
 from django.contrib.auth.hashers import make_password, check_password
 
+from django.db.models import Q
 # Create your views here
 
 from .forms import LoginForm
@@ -239,10 +240,35 @@ def character(response,id):
     return render(response, 'character.html', context);
 
 def combat_game(response):
-    if response.POST:
-        payment_id = response.POST.get('characterSelect', '')
+    character_name = None
+    enemy = None
 
-    return HttpResponse("Name: "+ payment_id+ " Character")
+    if 'username' in response.COOKIES and 'password' in response.COOKIES:
+        user = response.COOKIES['username'];
+        loged_in = True
+    else: loged_in = False
+
+
+    if response.POST:
+        character_name = response.POST.get('characterSelect', '')
+    else: return HttpResponse('Something goes wrong ;-; ');
+
+    if character_name != None:
+        character = Player.objects.get(name= character_name);
+        lv = character.lv;
+        ch_user = character.user;
+        enemy = Player.objects.all().filter(~Q(user= ch_user),lv=lv);
+        enemy_id = random.randint(1,len(enemy))
+
+
+    context = {
+        'enemy': enemy[enemy_id-1],
+        'player': character,
+        'logged_in': loged_in,
+        'title':'Combat Game'
+    }
+
+    return render(response,'combat_game.html',context)
 
 # FUNCTIONS !!!!!
 
