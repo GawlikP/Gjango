@@ -4,6 +4,7 @@ console.log('starting battle');
 // document.getElementById('myTextarea').value = '';
 var startGame = function() {
 var text_area = document.getElementById('game_textarea');
+var battle_result = document.getElementById('battle_result');
 text_area.value += player.name + "\n";
 text_area.value += player.clss + "\n";
 text_area.value += enemy.name + "\n"
@@ -15,9 +16,14 @@ while(player.hp > 0 && enemy.hp > 0){
   start_tour(enemy,text_area);
   attack(enemy,player,text_area);
 }
-if(player.hp < 0) text_area.value += " Enemy win !";
-else text_area.value += "Player win !";
-
+if(player.hp < 0) {
+  text_area.value += "Enemy win !";
+  battle_result.value = "Fail"
+}
+else {
+  text_area.value += "Player win !";
+  battle_result.value = "Victory"
+}
 }
 
 var start_tour = function(character,text_area){

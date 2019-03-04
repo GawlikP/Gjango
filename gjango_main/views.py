@@ -13,6 +13,8 @@ from .forms import CreatePlayerForm
 
 from .models import User
 from .models import Player
+from .models import Battle
+
 
 from gjango_main.char_cre import *
 
@@ -242,6 +244,7 @@ def character(response,id):
 def combat_game(response):
     character_name = None
     enemy = None
+    battle =  None
 
     if 'username' in response.COOKIES and 'password' in response.COOKIES:
         user = response.COOKIES['username'];
@@ -259,7 +262,9 @@ def combat_game(response):
         ch_user = character.user;
         enemy = Player.objects.all().filter(~Q(user= ch_user),lv=lv);
         enemy_id = random.randint(1,len(enemy))
+        if enemy_id and enemy:
 
+            battle = Battle.objects.create(player_id= character.id, enemy_id= enemy[enemy_id-1].id);
 
     context = {
         'enemy': enemy[enemy_id-1],
@@ -267,8 +272,56 @@ def combat_game(response):
         'logged_in': loged_in,
         'title':'Combat Game'
     }
+    request = render(response,'combat_game.html', context);
 
-    return render(response,'combat_game.html',context)
+    if battle != None:
+        request.set_cookie('battle_id',battle.id);
+        print('battle id setted')
+
+    return request
+
+def battle_finish(request):
+
+    user = None
+    battle_id = -1
+    result = 'Error'
+    logged_in = False
+
+    if 'username' in request.COOKIES and 'password' in request.COOKIES:
+        user = request.COOKIES['username'];
+        logged_in = True;
+    if 'battle_id' in request.COOKIES:
+        battle_id = request.COOKIES['battle_id']
+
+
+    if request.POST:
+        battle_result = request.POST.get('battle_result', '')
+        print(battle_result)
+        print(battle_id)
+        if battle_result == 'Victory' and battle_id != -1:
+            m = Battle.objects.get(id=battle_id)
+            m.result = True;
+            m.save();
+            result = 'Victory !!!';
+
+        elif battle_result == 'Fail' and battle_id != -1:
+            m = Battle.objects.get(id=battle_id)
+            m.result = False;
+            m.save();
+            result = 'Fail'
+        else:
+            return HttpResponse('Error XD')
+    Battle.objects.filter(~Q(id=battle_id),result= None).delete();
+
+    context = {
+        'result': result,
+        'logged_in': logged_in,
+        'title': 'Combat Result!'
+    }
+
+    response = render(request,'battle_finish.html',context)
+    response.delete_cookie('battle_id')
+    return response;
 
 # FUNCTIONS !!!!!
 

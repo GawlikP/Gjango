@@ -96,6 +96,13 @@
         <div class="wrapper">
           <textarea id="game_textarea" cols="100" rows="8"></textarea>
       </div>
+    </br>
+      <form action="/battle_finish/" method="POST">
+        {% csrf_token %}
+        <center> <input type="hidden" id="battle_result" name="battle_result" value="Fail">
+        <center> <input type="submit" value="Continue" id="continue_button"/> </center>
+
+      </form>
       </div>
 
       <hr>

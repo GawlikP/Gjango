@@ -44,3 +44,13 @@ class Player(models.Model):
         return self.name;
     class Meta:
         verbose_name_plural = 'Player'
+
+class Battle(models.Model):
+    player_id = models.IntegerField(default=-1);
+    enemy_id = models.IntegerField(default=-1);
+    result = models.BooleanField(null=True);
+
+    def __str__(self):
+        return str(self.id);
+    class Meta:
+        verbose_name_plural = 'Battle'
