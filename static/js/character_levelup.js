@@ -376,3 +376,20 @@ var Def_minus = function(button) {
 }
 
 };
+
+var set_post = function(button){
+
+    var str_points = document.getElementById('add_str').textContent;
+    var vit_points = document.getElementById('add_vit').textContent;
+    var agi_points = document.getElementById('add_agi').textContent;
+    var dex_points = document.getElementById('add_dex').textContent;
+    var inte_points = document.getElementById('add_inte').textContent;
+    var wis_points = document.getElementById('add_wis').textContent;
+    var pow_points = document.getElementById('add_pow').textContent;
+    var def_points = document.getElementById('add_def').textContent;
+
+    var hid = document.getElementById('Points_data');
+    hid.value = "Str:"+str_points + " " + "Vit:" + vit_points + " " + "Agi:" + agi_points + " "+
+                 "Dex:" + dex_points + " " + "Int:" + inte_points + " "+ "Wis:" + wis_points + " "+
+                 "Pow:" + pow_points + " " + "Def:" + def_points + " ";
+}

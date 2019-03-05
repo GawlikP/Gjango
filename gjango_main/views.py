@@ -17,6 +17,7 @@ from .models import Battle
 
 
 from gjango_main.char_cre import *
+from gjango_main.foos import *
 
 def index(request):
 
@@ -236,7 +237,7 @@ def character(response,id):
 
     if character:
         character.skill_points += Check_if_levelup(character);
-
+        character.save();
 
     context = {
     'title': 'Character',
@@ -365,7 +366,49 @@ def delete_character(request,id):
 
     return render(request, 'delete_character.html', context)
 
+def add_points(response,id):
+
+    points_data = 'IksDe'
+    logged = False
+    log_return = 'error'
+
+    if 'username' in response.COOKIES and 'password' in response.COOKIES:
+        user = response.COOKIES['username']
+        logged = True
+
+    if response.POST:
+        points_data = response.POST.get('Points_data', '')
+        print(points_data)
+        strn,vit,agi,dex,inte,wis,pow,defen = points_data.split();
+        strn,vit,agi,dex,inte,wis,pow,defen = return_values_from_stats(strn,vit,agi,dex,inte,wis,pow,defen)
+        character = Player.objects.get(id= id);
+        print(character.name)
+        print(strn+vit+agi+dex+inte+wis+pow+defen)
+        if character.skill_points >= strn+vit+agi+dex+inte+wis+pow+defen:
+            character.str += strn
+            character.vit += vit
+            character.agility += agi
+            character.dex += dex
+            character.inte += inte
+            character.wis += wis
+            character.pow += pow
+            character.defen += defen
+            character.skill_points -= strn+vit+agi+dex+inte+wis+pow+defen
+            print("add stats")
+            character.save()
+            log_return ="Your "+ character.name + " Level uped !"
+        else: log_return = "Not enough points in character </br> Something goes wrong"
+
+    context = {
+        'log_return': log_return,
+        'is_logged': logged,
+        'title': 'Level Up'
+    }
+
+    return render(response, 'level_up.html', context)
+
 # FUNCTIONS !!!!!
+
 
 def create_character(clss,name,user):
     if clss == '1':

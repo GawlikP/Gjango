@@ -42,7 +42,8 @@
   <h3> skill_points:  <label id="source_points"> {{character.skill_points}} </label> </br> </h3>
 
   {% if character.skill_points > 0.0 %}
-    <form method="POST" action="/add_points/{{character_id}}">
+    <form method="POST" action="/add_points/{{character.id}}/">
+      {% csrf_token %}
       <p>
     <div  class="alert alert-primary">Skill Points to spent  <label id="act_points">{{character.skill_points}}</label> </div>
       </p>
@@ -86,7 +87,8 @@
         <button type="button" class="btn btn-info" onclick="return Def_plus(this)">+</button>
         <button type="button" class="btn btn-info" onclick="return Def_minus(this)">-</button>
       </div> </p>
-      <input type="submit" class="btn btn-success" value="Add Points"></input>
+      <input type="submit" onclick="return set_post(this)" class="btn btn-success" value="Add Points"></input>
+      <input type="hidden" value="" name="Points_data" id="Points_data"></input>
     </form>
   {% endif %}
 

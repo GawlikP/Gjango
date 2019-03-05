@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^combat_game/',views.combat_game, name='combat_game'),
     url(r'^battle_finish/',views.battle_finish, name='battle_finish'),
     url(r'^delete_character/(?P<id>\d+)/$',views.delete_character, name='delete_character'),
+    url(r'^add_points/(?P<id>\d+)/$',views.add_points, name='add_points'),
     #r'^(?P<id>\d+)/$'
 ]
