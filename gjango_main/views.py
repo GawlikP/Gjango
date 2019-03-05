@@ -123,6 +123,7 @@ def profile(request):
     loged_in = False
     form = None
     Characters = None;
+    err = None
 
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username']
@@ -157,15 +158,16 @@ def profile(request):
                 if Player.objects.filter(name= name).count() == 0:
                     error = create_character(clss,name,user);
                 else:
-                    print('already exits')
+                    err = 'Character already exist'
                 if error:
                     print(error);
             else:
-                print('Error')
+                err = 'Something goes wrong'
     else:
         form = CreatePlayerForm()
 
     context = {
+        'error': err,
         'Characters': Characters,
         'form': form,
         'username': user,
@@ -231,6 +233,9 @@ def character(response,id):
     if 'username' in response.COOKIES and 'password' in response.COOKIES:
         user = response.COOKIES['username'];
         loged_in = True
+
+    if character:
+        character.skill_points += Check_if_levelup(character);
 
 
     context = {
@@ -331,7 +336,7 @@ def battle_finish(request):
         'exp_before': exp_before,
         'exp_now': exp_now,
         'result': result,
-        'logged_in': logged_in,
+        'is_logged': logged_in,
         'title': 'Combat Result!'
     }
 

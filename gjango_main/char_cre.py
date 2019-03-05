@@ -122,3 +122,22 @@ def set_random_perks(clss):
     defen = clss['def'] + rnd
         #    1,  2 , 3    ,  4, 5  , 6, 7,   8
     return vit,str,agility,dex,inte,wis,pow,defen;
+
+def Check_if_levelup(character):
+
+    points = 0.0
+
+    if character.lv == 1 and character.exp >= 100:
+        character.exp -= 100;
+        character.lv += 1;
+        points += 5.0;
+    if character.lv == 2 and character.exp >= 250:
+        character.exp -= 250;
+        character.lv += 1
+        points += 5.0
+    if character.lv == 3 and character.exp >= 400:
+        character.exp -= 400
+        character.lv += 1
+        points += 5.0
+
+    return points

@@ -2,3 +2,24 @@
   background-color:rgba(255,32,32,0.9);
   color:rgba(125,0,255,1);
 }
+.red_text{
+    color:#aa0000;
+}
+.blue_text{
+  color:#0000aa;
+}
+.purple_text{
+  color:#aa0088;
+}
+.green_text{
+  color:#00aa00;
+}
+.grey_blue_text{
+  color:#444499;
+}
+.brown_text{
+  color:#aa4433;
+}
+.grey_text{
+  color:#555555;
+}

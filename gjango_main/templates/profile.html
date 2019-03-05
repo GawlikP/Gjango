@@ -19,8 +19,14 @@
       {{form.Type_choice}} </br>
     </div>
       <input class="btn btn-success" type="submit" value="Create"/>
-      </div>
+
   </form>
+  {% if error != None %}
+    </br>
+      <div class="alert alert-danger"> {{error}} </div>
+
+
+  {% endif %}
 
   {% endif %}
 
@@ -38,10 +44,11 @@
 
   <div class="alert alert-info" > Username: {{username}} </div>
   {% if Characters %}
-    {% for character in Characters %}
+    {% for character in Characters %}<p>
       <a href="/character/{{character.id}}/">  {{character.name}} </a>
       <button onclick="delete_character_aproved(this)" name="{{character.id}}" value="Delete" class="btn btn-warning">Delete</button></br>
-    {% endfor %}
+      </p>
+  {% endfor %}
   {% endif %}
 <hr>
   {% else %}

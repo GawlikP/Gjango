@@ -38,6 +38,7 @@ class Player(models.Model):
     defen = models.FloatField(default=0.0)
     lv = models.IntegerField(default=1)
     exp = models.FloatField(default=0.0)
+    skill_points = models.FloatField(default=0.0)
     # character = models.ForeignKey(Player,null=True, related_name='Player', on_delete=models.SET_NULL);
     user = models.ForeignKey(User,null=True, related_name='User', on_delete=models.CASCADE);
     def __str__(self):

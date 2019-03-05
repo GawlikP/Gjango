@@ -2,7 +2,9 @@
 
 {% block left %}
 
+<script type="text/javascript" src="/static/js/character_levelup.js">
 
+</script>
   {% if  character %}
     <h2>Name : {{character.name}} </h2> </br>
   <h3>  class :{{character.clss}}  </br>
@@ -36,6 +38,57 @@
 
   <h2> Lvl: {{character.lv}} </h2> </br>
   <h3> Exp: {{character.exp}} </h3> </br>
+  <p> </p>
+  <h3> skill_points:  <label id="source_points"> {{character.skill_points}} </label> </br> </h3>
+
+  {% if character.skill_points > 0.0 %}
+    <form method="POST" action="/add_points/{{character_id}}">
+      <p>
+    <div  class="alert alert-primary">Skill Points to spent  <label id="act_points">{{character.skill_points}}</label> </div>
+      </p>
+      <p><div class="alert alert-success">Vit: {{character.vit}} +
+      <label id="add_vit"></label>
+      <button type="button" class="btn btn-info" onclick="return Vit_plus(this)">+</button>
+      <button type="button" class="btn btn-info" onclick="return Vit_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary red_text">Str: {{character.str}} +
+        <label id="add_str"></label>
+        <button type="button" class="btn btn-info" onclick="return Str_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Str_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary green_text">Agi: {{character.agility}} +
+        <label id="add_agi"></label>
+        <button type="button" class="btn btn-info" onclick="return Agi_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Agi_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary purple_text">Dex: {{character.dex}} +
+        <label id="add_dex"></label>
+        <button type="button" class="btn btn-info" onclick="return Dex_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Dex_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary blue_text">Inte: {{character.inte}} +
+        <label id="add_inte"></label>
+        <button type="button" class="btn btn-info" onclick="return Inte_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Inte_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary grey_blue_text">Wis: {{character.wis}} +
+        <label id="add_wis"></label>
+        <button type="button" class="btn btn-info" onclick="return Wis_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Wis_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary brown_text">Pow: {{character.pow}} +
+        <label id="add_pow"></label>
+        <button type="button" class="btn btn-info" onclick="return Pow_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Pow_minus(this)">-</button>
+      </div> </p>
+      <p> <div class="alert alert-primary grey_text">Def: {{character.defen}} +
+        <label id="add_def"></label>
+        <button type="button" class="btn btn-info" onclick="return Def_plus(this)">+</button>
+        <button type="button" class="btn btn-info" onclick="return Def_minus(this)">-</button>
+      </div> </p>
+      <input type="submit" class="btn btn-success" value="Add Points"></input>
+    </form>
+  {% endif %}
 
 {% endblock %}
 
