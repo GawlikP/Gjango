@@ -45,7 +45,14 @@ Thief = {
 }
 
 Monk = {
-
+    'vit': 1.5,
+    'str': 2.0,
+    'agility': 2.0,
+    'dex': 5.0,
+    'inte': 1.0,
+    'wis': 1.0,
+    'pow': 1.0,
+    'def': 2.5,
 }
 
 def get_stats_from_perks(clss):
@@ -120,15 +127,15 @@ def Check_if_levelup(character):
     points = 0.0
 
     if character.lv == 1 and character.exp >= 100:
-        character.exp -= 100;
         character.lv += 1;
         points += 5.0;
     if character.lv == 2 and character.exp >= 250:
-        character.exp -= 250;
         character.lv += 1
         points += 5.0
     if character.lv == 3 and character.exp >= 400:
-        character.exp -= 400
+        character.lv += 1
+        points += 5.0
+    if character.lv == 4 and character.exp >= 750:
         character.lv += 1
         points += 5.0
 

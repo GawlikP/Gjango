@@ -53,9 +53,12 @@ def registration(request):
             if not User.objects.filter(username=form.cleaned_data['name_input']):
                 usr = form.cleaned_data['name_input']
                 psw = form.cleaned_data['password_input']
-                user = User.objects.create(username=usr,password = make_password(psw))
-                Registered = True
-                print('created')
+                if psw == form.cleaned_data['confirm_password']:
+                    user = User.objects.create(username=usr,password = make_password(psw))
+                    Registered = True
+                    print('created')
+                else:
+                    Error = "Passwords does not matches"
             else:
                 Error = "User Already exist !"
         else:
