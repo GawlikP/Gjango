@@ -90,7 +90,7 @@ def login(request):
                 print('user: ' + str(user.password))
                 if check_password(form.cleaned_data['password_input'],user.password):
                     usr = form.cleaned_data['name_input']
-                    psw = form.cleaned_data['password_input']
+                    psw = user.password
                     Loged_in = True
                 else:
                     Error = "Password unconfirmed !"
@@ -251,6 +251,7 @@ def combat_game(response):
     character_name = None
     enemy = None
     battle =  None
+    level_decrease = 1
 
     if 'username' in response.COOKIES and 'password' in response.COOKIES:
         user = response.COOKIES['username'];
@@ -267,12 +268,18 @@ def combat_game(response):
         lv = character.lv;
         ch_user = character.user;
         enemy = Player.objects.all().filter(~Q(user= ch_user),lv=lv);
-        enemy_id = random.randint(1,len(enemy))
+        if enemy:
+            enemy_id = random.randint(1,len(enemy))
+        else:
+            enemy = Player.objects.all().filter(~Q(user= ch_user));
+            enemy_id = random.randint(1,len(enemy))
+            temp_enemy = Player.objects.get(id= enemy_id-1)
+            level_decrease =  1.0/temp_enemy.lv;
         if enemy_id and enemy:
 
             battle = Battle.objects.create(player_id= character.id, enemy_id= enemy[enemy_id-1].id);
-
     context = {
+        'level_decrease': level_decrease,
         'enemy': enemy[enemy_id-1],
         'player': character,
         'logged_in': loged_in,
@@ -285,7 +292,7 @@ def combat_game(response):
         print('battle id setted')
         request.set_cookie('character_id',character.id);
         print('character id setted')
-
+        request.set_cookie('level_decrease',level_decrease)
     return request
 
 def battle_finish(request):
@@ -293,6 +300,7 @@ def battle_finish(request):
     user = None
     battle_id = -1
     character_id = -1
+    level_decrease = 1
     result = 'Error'
     logged_in = False
     exp_before = 0
@@ -301,10 +309,11 @@ def battle_finish(request):
     if 'username' in request.COOKIES and 'password' in request.COOKIES:
         user = request.COOKIES['username'];
         logged_in = True;
-    if 'battle_id' in request.COOKIES and 'character_id' in request.COOKIES:
+    if 'battle_id' in request.COOKIES and 'character_id' in request.COOKIES and 'level_decrease' in request.COOKIES:
         battle_id = request.COOKIES['battle_id']
         character_id = request.COOKIES['character_id']
-
+        level_decrease = request.COOKIES['level_decrease']
+    else: result = 'Oh i think we lost yout battle :('
 
     if request.POST:
         battle_result = request.POST.get('battle_result', '')
@@ -320,7 +329,7 @@ def battle_finish(request):
                 m = Player.objects.get(id=character_id);
                 print("getting character id")
                 exp_before = m.exp
-                m.exp += 10 +(m.exp*0.5);
+                m.exp += (10 +(m.exp*0.5)) * float(level_decrease);
                 exp_now = m.exp
                 m.save();
 
