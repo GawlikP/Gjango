@@ -43,6 +43,22 @@ class Player(models.Model):
     user = models.ForeignKey(User,null=True, related_name='User', on_delete=models.CASCADE);
     def __str__(self):
         return self.name;
+    def set_stats(self,stats):
+        self.hp = stats[0]
+        self.max_hp = stats[0]
+        self.mp = stats[1]
+        self.max_mp = stats[1]
+        self.speed = stats[2]
+        self.dmg = stats[3]
+        self.armor = stats[4]
+        self.crit_chance = stats[5]
+        self.armor_pen = stats[6]
+        self.regeneration = stats[7]
+        self.mana_regeneration = stats[8]
+        self.s_pow = stats[9]
+        self.magic_pen = stats[10]
+        self.magic_a = stats[11]
+        self.dodge = stats[12]
     class Meta:
         verbose_name_plural = 'Player'
 

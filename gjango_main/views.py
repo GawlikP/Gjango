@@ -384,6 +384,7 @@ def add_points(response,id):
         character = Player.objects.get(id= id);
         print(character.name)
         print(strn+vit+agi+dex+inte+wis+pow+defen)
+        print(str(strn) + " " + str(vit) + " " + str(agi) + " " + str(dex) + " " + str(inte) + " " + str(wis) + " " + str(pow) + " " + str(defen));
         if character.skill_points >= strn+vit+agi+dex+inte+wis+pow+defen:
             character.str += strn
             character.vit += vit
@@ -393,6 +394,9 @@ def add_points(response,id):
             character.wis += wis
             character.pow += pow
             character.defen += defen
+            print(character.vit)
+            stats = GSFP_Plater(character)
+            character.set_stats(stats)
             character.skill_points -= strn+vit+agi+dex+inte+wis+pow+defen
             print("add stats")
             character.save()

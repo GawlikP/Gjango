@@ -45,14 +45,6 @@ Thief = {
 }
 
 Monk = {
-    'vit': 2.0,
-    'str': 2.0,
-    'agility': 1.0,
-    'dex': 6.0,
-    'inte': 1.0,
-    'wis': 1.0,
-    'pow': 1.0,
-    'def': 2.0,
 
 }
 
@@ -141,3 +133,8 @@ def Check_if_levelup(character):
         points += 5.0
 
     return points
+def GSFP_Plater(player):
+    a = [player.vit,player.str,player.agility,player.dex,player.inte,player.wis,player.pow,player.defen]
+    print(a[0])
+
+    return get_stats_from_perks(a)
